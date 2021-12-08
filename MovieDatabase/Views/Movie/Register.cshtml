@@ -1,0 +1,29 @@
+﻿@model Movie
+
+<h2>Register a Movie</h2>
+
+<p>@Html.ValidationSummary()</p>
+
+<form action="Result">
+    <p>Id</p>
+    <input type="number" name="Id" />
+
+    <p>Title</p>
+    <input type="text" name="Title" />
+
+    <p>Genre</p>
+    <select name="Genre">
+        <option value="Horror">Horror</option>
+        <option value="Comedy">Comedy</option>
+        <option value="Action">Action</option>
+        <option value="Drama">Drama</option>
+    </select>
+    <br />
+    <p>Year</p>
+    <input type="number" placeholder="2021" />
+
+    <p>Runtime</p>
+    <input type="number" name="RunTime" value="" />
+
+    <input type="submit" />
+</form>

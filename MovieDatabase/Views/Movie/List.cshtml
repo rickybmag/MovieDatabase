@@ -1,0 +1,12 @@
+﻿@model IEnumerable<Movie>
+
+    @foreach(Movie m in Model)
+    {
+                      <div style="border: solid 2px black">
+                          <p>Title: @m.Title</p>
+                          <p>Movie Id: @m.ID</p>
+                          <p>Genre: @m.Genre</p>
+                          <p>Release Year: @m.Year</p>
+                          <p>Run Time: @m.Runtime</p>
+                      </div>
+    }

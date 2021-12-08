@@ -1,0 +1,11 @@
+﻿@model Movie
+
+    <h2>Your movie was added to the database</h2>
+    <br />
+    <p>Movie Id: @Model.ID</p>
+    <p>Movie Title: @Model.Title</p>
+    <p>Genre: @Model.Genre</p>
+    <p>Release Year: @Model.Year</p>
+    <p>Runtime: @Model.Runtime</p>
+    <br />
+    <p>You can see your movie listed in our database list. Click <a asp-area="" asp-controller="Movie" asp-action="List">here</a> to view our list</p>
