@@ -4,10 +4,8 @@
 
 <p>@Html.ValidationSummary()</p>
 
-<form action="Result">
-    <p>Id</p>
-    <input type="number" name="Id" />
-
+<form action="Register" method="post">
+    
     <p>Title</p>
     <input type="text" name="Title" />
 
@@ -20,7 +18,7 @@
     </select>
     <br />
     <p>Year</p>
-    <input type="number" placeholder="2021" />
+    <input type="number" name="Year" />
 
     <p>Runtime</p>
     <input type="number" name="RunTime" value="" />

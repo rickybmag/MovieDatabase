@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MovieDatabase.Models
 {
-    public class MovieDB
+    public class MovieCRUD
     {
         public List<Movie> GetMovies()
         {

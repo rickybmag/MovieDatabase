@@ -3,17 +3,28 @@ using Microsoft.AspNetCore.Mvc;
 using MovieDatabase.Models;
 using MySqlConnector;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MovieDatabase.Controllers
 {
     public class MovieController : Controller
     {
-        public MovieDB movieAction = new MovieDB();
+        //public MovieDB movieAction = new MovieDB();
 
 
         public IActionResult List()
         {
-            List<Movie> movies = movieAction.GetMovies();
+            List<Movie> movies = new List<Movie>();
+            using (var connect = new MySqlConnection(Secret.Connection))
+            {
+                string sql = "select * from movies";
+
+                connect.Open();
+
+                movies = connect.Query<Movie>(sql).ToList();
+
+                connect.Close();
+            }
             return View(movies);
         }
 
@@ -24,22 +35,21 @@ namespace MovieDatabase.Controllers
 
         [HttpPost]
         public IActionResult Register(Movie m)
-        {
-            Movie movie = m;
+        {            
             if (ModelState.IsValid)
             {
                 using (var connect = new MySqlConnection(Secret.Connection))
                 {
-                    string sql = $"insert into movies values({0},'{movie.ID},{movie.Title}','{movie.Genre}',{movie.Year},{movie.Runtime})";
+                    string sql = $"insert into movies values({0},'{m.Title}','{m.Genre}',{m.Year},{m.Runtime})";
 
                     connect.Open();
 
-                    connect.Query(sql);
+                    connect.Query<Movie>(sql);
 
                     connect.Close();
-
-                    return RedirectToAction("Result", m);
                 }
+                return RedirectToAction("List");
+
             }
             else
             {
@@ -47,17 +57,11 @@ namespace MovieDatabase.Controllers
             }
         }
 
-        public IActionResult Result(Movie m)
-        {
-            if (ModelState.IsValid)
-            {
-                return RedirectToAction("List", "Movie");
-            }
-            else
-            {
-                return RedirectToAction("Register");
-            }
-        }
+        //public IActionResult Result(Movie m)
+        //{
+
+        //    return View(m);
+        //}
 
 
     }
