@@ -9,22 +9,11 @@ namespace MovieDatabase.Controllers
 {
     public class MovieController : Controller
     {
-        //public MovieDB movieAction = new MovieDB();
-
+        public MovieDAL MovieDB = new MovieDAL();
 
         public IActionResult List()
         {
-            List<Movie> movies = new List<Movie>();
-            using (var connect = new MySqlConnection(Secret.Connection))
-            {
-                string sql = "select * from movies";
-
-                connect.Open();
-
-                movies = connect.Query<Movie>(sql).ToList();
-
-                connect.Close();
-            }
+            List<Movie> movies = MovieDB.GetMovies();
             return View(movies);
         }
 
@@ -57,11 +46,54 @@ namespace MovieDatabase.Controllers
             }
         }
 
-        //public IActionResult Result(Movie m)
-        //{
+        public IActionResult Details(int id)
+        {
+            Movie m = MovieDB.GetMovie(id);
+            if (m != null)
+            {
+                return View(m);
+            }
+            else
+            {
+                return RedirectToAction("Error");
+            }
+        }
 
-        //    return View(m);
-        //}
+        public IActionResult Delete(int id)
+        {
+            Movie m = MovieDB.GetMovie(id);
+            if (m != null)
+            {
+                return View(m);
+            }
+            else
+            {
+                return RedirectToAction("Error");
+            }
+        }
+
+       public IActionResult Edit(int id)
+        {
+            Movie m = MovieDB.GetMovie(id);
+            if (m != null)
+            {
+                return View(m);
+            }
+            else
+            {
+                return RedirectToAction("IDError", id);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Movie m)
+        {
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("List");
+            }
+            return View(m);
+        }
 
 
     }
